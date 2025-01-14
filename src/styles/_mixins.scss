@@ -1,0 +1,44 @@
+@import "vars";
+
+
+
+@mixin button($bg: transparent, $border: none) {
+  border: $border;
+  background: $bg;
+  cursor: pointer;
+}
+
+@mixin svg($width, $color: transparent, $height: $width, $stroke: none) {
+  width: $width;
+  height: $height;
+  fill: $color;
+  stroke: $stroke;
+}
+
+@mixin setFont(
+  $size,
+  $weight,
+  $color: $color-text,
+  $family: $font-fam-primary,
+) {
+  font-size: $size;
+  font-weight: $weight;
+  font-family: $family;
+  color: $color;
+
+ 
+}
+
+@mixin flexCol($layout: center, $align: center) {
+  display: flex;
+  justify-content: $layout;
+  align-items: $align;
+}
+
+@mixin bgWebp($src, $srcSet) {
+  background-image: url($src); /* Fallback image */
+
+  @supports (background-image: url($srcSet)) {
+    background-image: url($srcSet);
+  }
+}
