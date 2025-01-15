@@ -1,0 +1,12 @@
+@import "../../styles/mixins";
+@import "../../styles/vars";
+
+.header {
+  padding: 20px 0;
+  @include flexCol();
+  background-color: #000000;
+
+  &__logo {
+    @include svg(164px, $color-text, 40px);
+  }
+}
