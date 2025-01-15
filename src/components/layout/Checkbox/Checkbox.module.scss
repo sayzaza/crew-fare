@@ -1,0 +1,40 @@
+@import "../../../styles/vars";
+@import "../../../styles/mixins";
+
+.checkbox {
+  &__label {
+    @include setFont(14px, 500);
+    position: relative;
+    padding-left: 32px;
+    cursor: pointer;
+    width: 100%;
+
+    &:before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border: 1px solid $color-grey-light;
+      border-radius: 4px;
+      position: absolute;
+      left: 0;
+      transform: translateY(-50%);
+      top: 50%;
+      background-repeat: no-repeat;
+      background-size: 10px;
+      background-position: center;
+    }
+  }
+
+  &__input {
+    visibility: hidden;
+    width: 0;
+
+    &:checked + label {
+      &::before {
+        border-color: $color-green;
+        background-color: $color-green;
+        background-image: url("../../../assets/images/checkbox.png");
+      }
+    }
+  }
+}

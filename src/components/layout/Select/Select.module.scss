@@ -1,0 +1,57 @@
+@import "../../../styles/vars";
+@import "../../../styles/mixins";
+
+.select {
+  position: relative;
+
+  &__dropdownBtn {
+    cursor: pointer;
+    width: 100%;
+    @extend %field;
+
+    &:hover,
+    &:active,
+    &:focus-visible {
+      @extend %field_active;
+    }
+
+    &_invalid {
+      @extend %field_invalid;
+    }
+  }
+  &__arrowDownIcon {
+    @include svg(12px, $color-green, 6px);
+    transition: $transition;
+
+    &_reversed {
+      transform: rotate(180deg);
+    }
+  }
+  &__dropdownContent {
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    bottom: -10px;
+    background: $color-grey;
+    border-radius: 8px;
+    transform: translateY(100%);
+    @include flexCol(flex-start);
+    flex-direction: column;
+    box-shadow: 1px 1px 8px 0px $color-bg;
+    transform: translate(0%, 100%);
+  }
+  &__dropdownItem {
+    width: 100%;
+    text-align: left;
+    @include button;
+    @include setFont(16px, 600);
+    padding: 12px 14px;
+    border-radius: 8px;
+    transition: $transition;
+
+    &:hover {
+      background: #ffffff33;
+    }
+  }
+}

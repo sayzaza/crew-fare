@@ -1,8 +1,8 @@
 @import "../../styles/mixins";
 @import "../../styles/vars";
 
-
 .app {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  overflow: hidden;
+  flex: 1;
 }

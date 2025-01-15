@@ -9,15 +9,17 @@
   padding: 0;
 }
 
-
-
 body {
   background: $color-bg;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 button:focus-visible,
 a:focus-visible {
   outline: none;
 }
-
-

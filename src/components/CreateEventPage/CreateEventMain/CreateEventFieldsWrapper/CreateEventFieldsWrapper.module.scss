@@ -1,0 +1,9 @@
+@import "../../../../styles/mixins";
+@import "../../../../styles/vars";
+
+.createEventFieldsWrapper {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid $color-grey;
+  border-radius: 12px;
+}

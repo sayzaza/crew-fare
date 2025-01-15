@@ -1,7 +1,5 @@
 @import "vars";
 
-
-
 @mixin button($bg: transparent, $border: none) {
   border: $border;
   background: $bg;
@@ -19,14 +17,12 @@
   $size,
   $weight,
   $color: $color-text,
-  $family: $font-fam-primary,
+  $family: $font-fam-primary
 ) {
   font-size: $size;
   font-weight: $weight;
   font-family: $family;
   color: $color;
-
- 
 }
 
 @mixin flexCol($layout: center, $align: center) {
@@ -41,4 +37,24 @@
   @supports (background-image: url($srcSet)) {
     background-image: url($srcSet);
   }
+}
+
+%field {
+  background: $color-grey;
+  height: 48px;
+  padding-inline: 12px;
+  border-radius: 8px;
+  @include flexCol(space-between);
+  @include setFont(14px, 500);
+  border: 1px solid transparent;
+  transition: $transition;
+}
+
+%field_active {
+  border-color: $color-text;
+}
+
+%field_invalid {
+  background: #e74c3c1a;
+  border-color: $color-coral;
 }

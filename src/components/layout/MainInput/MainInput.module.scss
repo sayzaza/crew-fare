@@ -1,0 +1,21 @@
+@import "../../../styles/vars";
+@import "../../../styles/mixins";
+
+.mainInput {
+  outline: none;
+  @extend %field;
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    @extend %field_active;
+  }
+
+  ::placeholder {
+    color: $color-grey-light;
+  }
+
+  &_invalid {
+    @extend %field_invalid;
+  }
+}

@@ -1,10 +1,8 @@
-import React from "react";
 import { Meta, StoryFn } from "@storybook/react";
 
 import CreateEventMain from "./CreateEventMain";
 import { ECreateEventTabKeys } from "../../../constants/createEventTabs";
 
-// Mock data for Storybook
 const mockChangeActiveTab = (changeToPrev?: boolean) => {
   console.log(`Active tab changed: ${changeToPrev ? "Previous" : "Next"}`);
 };
@@ -13,7 +11,7 @@ export default {
   title: "Components/CreateEventMain",
   component: CreateEventMain,
   args: {
-    activeTab: ECreateEventTabKeys.DETAILS, // Replace with a valid key from your constants
+    activeTab: ECreateEventTabKeys.DETAILS, 
   },
   argTypes: {
     activeTab: {
