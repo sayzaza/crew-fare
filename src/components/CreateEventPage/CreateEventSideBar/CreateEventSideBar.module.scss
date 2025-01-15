@@ -1,2 +1,89 @@
 @import "../../../styles/mixins";
 @import "../../../styles/vars";
+
+.createEventSideBar {
+  width: 248px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #141416;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__title {
+    @include setFont(24px, 700);
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    @include button();
+    padding: 12px 8px;
+    @include flexCol();
+    gap: 12px;
+    border-radius: 8px;
+    transition: $transition;
+    border: 1px solid transparent;
+
+    &_active {
+      background: $color-bg;
+      border-color: $color-grey;
+    }
+  }
+
+  &__indexWrapper {
+    width: 24px;
+    height: 24px;
+    @include flexCol();
+    background: $color-grey;
+    --text-color: #a3a3a3;
+    transition: $transition;
+    border-radius: 50%;
+
+    &_active {
+      background: $color-primary;
+      --text-color: #fff;
+    }
+
+    &_completed {
+      background-color: $color-green;
+    }
+  }
+
+  &__checkboxIcon {
+    @include svg(9px);
+  }
+
+  &__indexTxt {
+    @include setFont(12px, 600, var(--text-color));
+    transition: $transition;
+  }
+
+  &__buttonText {
+    @include setFont(14px, 500);
+    flex: 1;
+    text-align: left;
+  }
+
+  &__alert {
+    width: 16px;
+    height: 16px;
+    @include flexCol();
+    background: $color-coral;
+    opacity: 0;
+    border-radius: 50%;
+    transition: $transition;
+
+    &_show {
+      opacity: 1;
+    }
+  }
+
+  &__alertIcon {
+    @include svg(9px);
+  }
+}
