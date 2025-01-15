@@ -1,0 +1,25 @@
+@import "../../../styles/vars";
+@import "../../../styles/mixins";
+
+.mainBtn {
+  @include button($color-primary);
+  white-space: nowrap;
+  text-align: center;
+  padding: 14px 4px;
+  min-width: 120px;
+  border-radius: 8px;
+  @include setFont(14px, 700);
+  display: block;
+  transition: $transition;
+
+  &:hover,
+  &:active,
+  &:focus-visible {
+    background: #4e30f8;
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}

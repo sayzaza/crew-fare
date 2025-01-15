@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 
 import styles from "./CreateEventDetailsForm.module.scss";
 
-interface Props {
-  
-}
+interface Props {}
 
 const CreateEventDetailsForm: React.FC<Props> = (props) => {
-  return <div></div>;
+  return <div>CreateEventDetailsForm</div>;
 };
 
 export default CreateEventDetailsForm;

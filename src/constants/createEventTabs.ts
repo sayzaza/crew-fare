@@ -18,7 +18,7 @@ export const CREATE_EVENT_TABS = {
     component: CreateEventDetailsForm,
   },
   [ECreateEventTabKeys.DATES]: {
-    title: "Basic Information",
+    title: "Dates",
     component: CreateEventDatesForm,
   },
 };

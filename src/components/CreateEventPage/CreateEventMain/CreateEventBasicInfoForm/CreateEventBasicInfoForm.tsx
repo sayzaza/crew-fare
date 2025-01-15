@@ -7,7 +7,7 @@ interface Props {
 }
 
 const CreateEventBasicInfoForm: React.FC<Props> = (props) => {
-  return <div></div>;
+  return <div>CreateEventBasicInfoForm</div>;
 };
 
 export default CreateEventBasicInfoForm;
