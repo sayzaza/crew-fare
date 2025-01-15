@@ -1,10 +1,9 @@
 import React from 'react'
+import CreateEventWrapper from '../components/CreateEventPage/CreateEventWrapper/CreateEventWrapper'
 
 const CreateEventPage = () => {
   return (
-    <div>
-      
-    </div>
+    <CreateEventWrapper/>
   )
 }
 
