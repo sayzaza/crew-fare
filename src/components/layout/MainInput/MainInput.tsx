@@ -5,9 +5,10 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isInvalid?: boolean;
 }
 
-const MainInput = ({ className, isInvalid, ...attrs }: Props) => {
+const MainInput = ({ className, isInvalid, placeholder, ...attrs }: Props) => {
   return (
     <input
+      placeholder={placeholder || "Type here"}
       className={`${styles.mainInput} ${
         isInvalid ? styles.mainInput_invalid : ""
       } ${className || ""}`}

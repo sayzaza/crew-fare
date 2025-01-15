@@ -10,9 +10,7 @@ import {
 
 const CreateEventWrapper = () => {
   const [activeTab, setActiveTab] = useState(ECreateEventTabKeys.BASIC);
-  const [errors, setErrors] = useState<ECreateEventTabKeys[]>([
-    ECreateEventTabKeys.DATES,
-  ]);
+  const [errors, setErrors] = useState<ECreateEventTabKeys[]>([]);
 
   const activeTabIndex = CREATE_EVENT_TABS_ARRAY.findIndex(
     (tab) => tab.key === activeTab
@@ -20,7 +18,6 @@ const CreateEventWrapper = () => {
 
   const onChangeTabByArrows = (changeToPrev?: boolean) => {
     const changeToIndex = changeToPrev ? -1 : 1;
-console.log(CREATE_EVENT_TABS_ARRAY,activeTabIndex);
 
     if (!CREATE_EVENT_TABS_ARRAY[activeTabIndex + changeToIndex]) return;
     setActiveTab(CREATE_EVENT_TABS_ARRAY[activeTabIndex + changeToIndex].key);
@@ -34,6 +31,8 @@ console.log(CREATE_EVENT_TABS_ARRAY,activeTabIndex);
         changeActiveTab={setActiveTab}
       />
       <CreateEventMain
+        erroredTabs={errors}
+        setErrors={setErrors}
         changeActiveTab={onChangeTabByArrows}
         activeTab={activeTab}
       />
