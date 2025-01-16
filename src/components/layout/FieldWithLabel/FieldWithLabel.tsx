@@ -4,7 +4,7 @@ import styles from "./FieldWithLabel.module.scss";
 
 interface Props {
   children: ReactNode;
-  label: ReactNode;
+  label?: ReactNode;
   asDiv?: boolean;
   error?: string;
   withoutError?: boolean;
@@ -23,7 +23,7 @@ const FieldWithLabel: React.FC<Props> = ({
 
   return (
     <Label className={`${styles.fieldWithLabel} ${className || ""}`}>
-      <span className={styles.fieldWithLabel__text}>{label}</span>
+      {label && <span className={styles.fieldWithLabel__text}>{label}</span>}{" "}
       {children}
       {!withoutError && (
         <>

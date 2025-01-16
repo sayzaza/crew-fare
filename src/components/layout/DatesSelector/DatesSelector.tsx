@@ -16,10 +16,12 @@ import "react-calendar/dist/Calendar.css";
 import styles from "./DatesSelector.module.scss";
 
 interface Props {
-  startDateValue: Date;
-  endDateValue: Date;
+  startDateValue: Date | "";
+  endDateValue: Date | "";
   onChangeStartDate: (date: Date) => void;
   onChangeEndDate: (date: Date) => void;
+  disabled?: boolean;
+  isInvalid?: boolean;
 }
 
 const monthNames = [
@@ -49,18 +51,22 @@ const DatesSelector: React.FC<Props> = ({
   endDateValue,
   onChangeStartDate,
   onChangeEndDate,
+  disabled,
+  isInvalid
 }) => {
   const [calendarsOpened, setCalendarsOpened] = useState(false);
-  const [startDate, setStartDate] = useState(
-    startDateValue ? new Date(startDateValue) : new Date()
+
+  // Initialize startDate and endDate as null if values are falsy
+  const [startDate, setStartDate] = useState<Date | null>(
+    startDateValue ? new Date(startDateValue) : null
   );
   const nextMonthDate = new Date();
   nextMonthDate.setMonth(nextMonthDate.getMonth() + 1);
-  const [endDate, setEndDate] = useState(
-    endDateValue ? new Date(endDateValue) : nextMonthDate
+  const [endDate, setEndDate] = useState<Date | null>(
+    endDateValue ? new Date(endDateValue) : null
   );
 
-  const startActiveDateValue = new Date(startDate);
+  const startActiveDateValue = startDate ? new Date(startDate) : new Date();
   startActiveDateValue.setDate(1);
   const [startActiveDate, setStartActiveDate] = useState(startActiveDateValue);
 
@@ -85,7 +91,8 @@ const DatesSelector: React.FC<Props> = ({
       document.removeEventListener("click", checkIfClickedOutside);
     };
   }, []);
-  const endActiveDate = new Date(startActiveDate);
+
+  const endActiveDate = startDate ? new Date(startActiveDate) : new Date();
   endActiveDate.setMonth(endActiveDate.getMonth() + 1);
 
   useEffect(() => {
@@ -93,13 +100,17 @@ const DatesSelector: React.FC<Props> = ({
   }, [calendarsOpened]);
 
   useEffect(() => {
-    onChangeStartDate(startDate);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (startDate) {
+      onChangeStartDate(startDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate]);
 
   useEffect(() => {
-    onChangeEndDate(endDate);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (endDate) {
+      onChangeEndDate(endDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endDate]);
 
   const onChangeActiveDate = (isPrev?: boolean) => {
@@ -115,11 +126,14 @@ const DatesSelector: React.FC<Props> = ({
   };
 
   return (
-    <div className={styles.datesSelector} ref={calendarRef}>
+    <div className={`${styles.datesSelector} ${isInvalid ? styles.datesSelector_invalid : ""}`} ref={calendarRef}>
       <span>
-        {formatDate(startDate)} - {formatDate(endDate)}
+        {startDate && endDate
+          ? `${formatDate(startDate)} - ${formatDate(endDate)}`
+          : "Select Dates"}
       </span>
       <button
+        disabled={disabled}
         type="button"
         onClick={() => setCalendarsOpened((prevState) => !prevState)}
         className={styles.datesSelector__calendarBtn}
@@ -143,11 +157,13 @@ const DatesSelector: React.FC<Props> = ({
         </button>
         <div className={styles.datesSelector__calendarWrapper}>
           <h5 className={styles.datesSelector__calendarTitle}>
-            {getDateYearAndMonth(startActiveDate)}
+            {startDate
+              ? getDateYearAndMonth(startActiveDate)
+              : "Select Start Date"}
           </h5>
           <Calendar
-            onChange={(d) => setStartDate(new Date(d as Date))}
-            value={startDate}
+            onChange={(d) => setStartDate(d as Date)}
+            value={startDate || new Date()}
             className={styles.datesSelector__calendar}
             tileClassName={styles.datesSelector__calendarTile}
             showNavigation={false}
@@ -156,14 +172,14 @@ const DatesSelector: React.FC<Props> = ({
         </div>
         <div className={styles.datesSelector__calendarWrapper}>
           <h5 className={styles.datesSelector__calendarTitle}>
-            {getDateYearAndMonth(endActiveDate)}
+            {endDate ? getDateYearAndMonth(endActiveDate) : "Select End Date"}
           </h5>
           <Calendar
             onChange={(d) => {
-              setEndDate(new Date(d as Date));
+              setEndDate(d as Date);
               setCalendarsOpened(false);
             }}
-            value={endDate}
+            value={endDate || new Date()}
             className={styles.datesSelector__calendar}
             tileClassName={styles.datesSelector__calendarTile}
             showNavigation={false}

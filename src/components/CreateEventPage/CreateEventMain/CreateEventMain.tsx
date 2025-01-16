@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useFormValue } from "../../../hooks/useFormValue";
-import { getNextMonthDate } from "../../../utils/functions/getNextMonthDate";
-import { validateField } from "../../../utils/functions/validateField";
+import {
+  validateDateByBookableDates,
+  validateField,
+} from "../../../utils/functions/validate";
 
 import Svg from "../../layout/Svg/Svg";
 import MainBtn from "../../layout/MainBtn/MainBtn";
@@ -19,6 +21,8 @@ import {
 import { alertIcon, arrowLeftIcon, arrowRightIcon } from "../../../assets/svg";
 import styles from "./CreateEventMain.module.scss";
 
+type EventDateTypeKey = keyof IEvent["startEndDates"][0];
+
 interface Props {
   activeTab: ECreateEventTabKeys;
   changeActiveTab: (changeToPrev?: boolean) => void;
@@ -32,7 +36,6 @@ const CreateEventMain: React.FC<Props> = ({
   setErrors,
   erroredTabs,
 }) => {
-  const [today, nextMonth] = getNextMonthDate();
   const initialData: IEvent = {
     actionType: "enable",
     type: EventTypes.PUBLIC,
@@ -45,11 +48,11 @@ const CreateEventMain: React.FC<Props> = ({
     venue: "",
     featuredHotelsTitle: "Featured hotels",
     minNights: 1,
-    bookableStartDate: today,
-    bookableEndDate: nextMonth,
-    checkInDate: today,
-    checkOutDate: nextMonth,
-    startEndDates: [{ start: today, end: nextMonth, id: uuidv4() }],
+    bookableStartDate: "",
+    bookableEndDate: "",
+    checkInDate: "",
+    checkOutDate: "",
+    startEndDates: [{ start: "", end: "", id: uuidv4() }],
     taxes: [],
   };
   const {
@@ -130,11 +133,47 @@ const CreateEventMain: React.FC<Props> = ({
         }
       }
 
+      // validate start and end dates
+      if (key === "startEndDates") {
+        const erroredDate = formData[key].find((date) => {
+          return (
+            Object.keys(date).filter((dateKey) =>
+              validateField(date[dateKey as EventDateTypeKey], "date")
+            ).length ||
+            validateDateByBookableDates(
+              [date.start, date.end],
+              ["start date", "end date"],
+              [formData.bookableStartDate, formData.bookableEndDate]
+            )
+          );
+        });
+        if (erroredDate) {
+          acc[key] = "error";
+        }
+      }
+
       // validate link
       if (key === "link") {
         const linkRegex = /^[a-zA-Z0-9-]+$/;
         if (!linkRegex.test(formData.link)) {
           acc[key] = "Link can only contain letters, numbers, and dashes.";
+        }
+      }
+
+      // validate check-in & check-out dates
+      if (key === "checkOutDate") {
+        const errorTxt = validateDateByBookableDates(
+          [formData.checkInDate, formData.checkOutDate],
+          ["check-in date", "check-out date"],
+          [formData.bookableStartDate, formData.bookableEndDate]
+        );
+
+        if (errorTxt) {
+          if (errorTxt.includes("check-in date")) {
+            acc.checkInDate = errorTxt;
+          } else {
+            acc.checkOutDate = errorTxt;
+          }
         }
       }
 

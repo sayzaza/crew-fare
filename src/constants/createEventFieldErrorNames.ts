@@ -10,5 +10,9 @@ export const createEventFieldErrorNames: {[key in EventFields]?: string} = {
     address: "address",
     venue: "venue name",
     featuredHotelsTitle: "featured hotels title",
-    minNights: "minimum nights"
+    minNights: "minimum nights",
+    bookableStartDate: "bookable start date",
+    bookableEndDate: "bookable end date",
+    checkInDate: "check-in date",
+    checkOutDate: "check-out date",
 }

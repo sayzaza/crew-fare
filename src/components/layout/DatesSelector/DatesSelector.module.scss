@@ -6,8 +6,18 @@
   width: 100%;
   position: relative;
 
+  &_invalid {
+    @extend %field_invalid;
+  }
+
   &__calendarBtn {
     @include button();
+    transition: $transition;
+
+    &:disabled {
+      cursor: default;
+      filter: grayscale(10);
+    }
   }
   &__calendarIcon {
     @include svg(24px);

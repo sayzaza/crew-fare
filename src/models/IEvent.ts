@@ -13,10 +13,10 @@ export interface IEvent {
   venue: string;
   featuredHotelsTitle: string;
   minNights: number;
-  bookableStartDate: Date;
-  bookableEndDate: Date;
-  checkInDate: Date;
-  checkOutDate: Date;
-  startEndDates: { start: Date; end: Date,id: string }[];
+  bookableStartDate: Date | "";
+  bookableEndDate: Date | "";
+  checkInDate: Date | "";
+  checkOutDate: Date | "";
+  startEndDates: { start: Date | ""; end: Date | "",id: string }[];
   taxes: IEventTax[];
 }

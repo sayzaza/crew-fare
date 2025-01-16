@@ -1,6 +1,9 @@
 import React from "react";
 import { v4 } from "uuid";
-import { validateField } from "../../../../utils/functions/validateField";
+import {
+  validateDateByBookableDates,
+  validateField,
+} from "../../../../utils/functions/validate";
 import { getNextMonthDate } from "../../../../utils/functions/getNextMonthDate";
 
 import CreateEventFieldsWrapper from "../CreateEventFieldsWrapper/CreateEventFieldsWrapper";
@@ -16,6 +19,9 @@ import { CreateEventTabProps } from "../../../../constants/createEventTabs";
 import { tooltipFootImage } from "../../../../assets/images";
 import { infoIcon, plusIcon, trashIcon } from "../../../../assets/svg";
 import styles from "./CreateEventDatesForm.module.scss";
+import { IEvent } from "../../../../models/IEvent";
+
+type EventDateTypeKey = keyof IEvent["startEndDates"][0];
 
 const taxTypeOptions: ISelectOption[] = [
   {
@@ -34,6 +40,22 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
   formData,
   error,
 }) => {
+  const checkStartEndDatesvalidity = () => {
+    const erroredDate = formData.startEndDates.find((date) => {
+      return (
+        Object.keys(date).filter((dateKey) =>
+          validateField(date[dateKey as EventDateTypeKey], "date")
+        ).length ||
+        validateDateByBookableDates(
+          [date.start, date.end],
+          ["start date", "end date"],
+          [formData.bookableStartDate, formData.bookableEndDate]
+        )
+      );
+    });
+    if (!erroredDate) clearInputError("startEndDates");
+  };
+
   const onChangeStartEndDate = (
     date: Date,
     index: number,
@@ -45,15 +67,18 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
     const conditionKey = isEndDate ? "end" : "start";
     updateingStartEndDates[index][conditionKey] = date;
 
-    onChangeSelect("startEndDates", updateingStartEndDates);
+    onChangeSelect("startEndDates", updateingStartEndDates, false);
+
+    // validate
+    checkStartEndDatesvalidity();
   };
   const onDeleteStartEndDate = (index: number) => {
-
     const updateingStartEndDates = [...formData.startEndDates].filter(
       (item, i) => index !== i
     );
 
-    onChangeSelect("startEndDates", updateingStartEndDates);
+    onChangeSelect("startEndDates", updateingStartEndDates, false);
+    checkStartEndDatesvalidity();
   };
   const onAddStartEndDate = () => {
     const [start, end] = getNextMonthDate();
@@ -62,7 +87,7 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
       { start, end, id: v4() },
     ];
 
-    onChangeSelect("startEndDates", updateingStartEndDates);
+    onChangeSelect("startEndDates", updateingStartEndDates, false);
   };
 
   const checkTaxesValidity = (taxes: IEventTax[]) => {
@@ -109,7 +134,7 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
         className={styles.createEventDatesForm__fieldsWrapper}
       >
         <FieldWithLabel
-          withoutError
+          error={error.bookableStartDate || error.bookableEndDate}
           label={
             <>
               <span>Bookable Start & End Dates</span>
@@ -135,6 +160,7 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
           asDiv
         >
           <DatesSelector
+            isInvalid={!!(error.bookableStartDate || error.bookableEndDate)}
             startDateValue={formData.bookableStartDate}
             endDateValue={formData.bookableEndDate}
             onChangeStartDate={(date) =>
@@ -146,37 +172,56 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
         <div className={styles.createEventDatesForm__startEndDatesWrapper}>
           <FieldWithLabel label="Event Start and End Dates" asDiv withoutError>
             <div className={styles.createEventDatesForm__startEndDatesList}>
-              {formData.startEndDates.map(({ start, end, id }, index) => (
-                <div
-                  className={styles.createEventDatesForm__startEndDateCol}
-                  key={id}
-                >
-                  <DatesSelector
-                    startDateValue={start}
-                    endDateValue={end}
-                    onChangeStartDate={(date) =>
-                      onChangeStartEndDate(date, index)
-                    }
-                    onChangeEndDate={(date) =>
-                      onChangeStartEndDate(date, index, true)
-                    }
-                  />
-                  <button
-                    disabled={formData.startEndDates.length <= 1}
-                    type="button"
-                    onClick={() => onDeleteStartEndDate(index)}
-                    className={styles.createEventDatesForm__deleteBtn}
-                  >
-                    <Svg
-                      id={trashIcon}
-                      className={styles.createEventDatesForm__deleteIcon}
-                    />
-                  </button>
-                </div>
-              ))}
+              {formData.startEndDates.map(({ start, end, id }, index) => {
+                const errorText =
+                  error.startEndDates &&
+                  (validateField(start, "start date") ||
+                    validateField(end, "end date") ||
+                    validateDateByBookableDates(
+                      [start, end],
+                      ["start date", "end date"],
+                      [formData.bookableStartDate, formData.bookableEndDate]
+                    ));
+                return (
+                  <FieldWithLabel label="" asDiv error={errorText}>
+                    <div
+                      className={styles.createEventDatesForm__startEndDateCol}
+                      key={id}
+                    >
+                      <DatesSelector
+                        isInvalid={!!errorText}
+                        disabled={
+                          !formData.bookableEndDate ||
+                          !formData.bookableStartDate
+                        }
+                        startDateValue={start}
+                        endDateValue={end}
+                        onChangeStartDate={(date) =>
+                          onChangeStartEndDate(date, index)
+                        }
+                        onChangeEndDate={(date) =>
+                          onChangeStartEndDate(date, index, true)
+                        }
+                      />
+                      <button
+                        disabled={formData.startEndDates.length <= 1}
+                        type="button"
+                        onClick={() => onDeleteStartEndDate(index)}
+                        className={styles.createEventDatesForm__deleteBtn}
+                      >
+                        <Svg
+                          id={trashIcon}
+                          className={styles.createEventDatesForm__deleteIcon}
+                        />
+                      </button>
+                    </div>
+                  </FieldWithLabel>
+                );
+              })}
             </div>
           </FieldWithLabel>
           <button
+            disabled={!formData.bookableEndDate || !formData.bookableStartDate}
             type="button"
             onClick={onAddStartEndDate}
             className={styles.createEventDatesForm__addBtn}
@@ -190,10 +235,12 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
         </div>
         <FieldWithLabel
           label={"Default Check-In & Check-Out Dates"}
-          withoutError
+          error={error.checkInDate || error.checkOutDate}
           asDiv
         >
           <DatesSelector
+            isInvalid={!!(error.checkInDate || error.checkOutDate)}
+            disabled={!formData.bookableEndDate || !formData.bookableStartDate}
             startDateValue={formData.checkInDate}
             endDateValue={formData.checkOutDate}
             onChangeStartDate={(date) => onChangeSelect("checkInDate", date)}

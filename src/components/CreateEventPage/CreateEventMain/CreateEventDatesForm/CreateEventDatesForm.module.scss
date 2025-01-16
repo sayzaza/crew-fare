@@ -97,6 +97,12 @@
     @include flexCol(flex-start);
     gap: 8px;
     @include setFont(14px, 600, $color-green);
+    transition: $transition;
+
+    &:disabled {
+      cursor: default;
+      filter: grayscale(1)
+    }
   }
 
   &__addBtnPlusIcon {
