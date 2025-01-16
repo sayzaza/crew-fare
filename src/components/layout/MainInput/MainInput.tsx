@@ -19,18 +19,16 @@ const MainInput = ({
 }: Props) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
-  const handleStepChange = (stepAction: "stepUp" | "stepDown") => {
-    if (ref.current) {
-      ref.current[stepAction]();
-      const event = new Event("input", { bubbles: true });
-      ref.current.dispatchEvent(event);
-      if (onChange) {
-        onChange({
-          target: ref.current,
-        } as React.ChangeEvent<HTMLInputElement>);
-      }
+ const handleStepChange = (stepAction: "stepUp" | "stepDown") => {
+  if (ref.current) {
+    ref.current[stepAction](); // This changes the value
+    if (onChange) {
+      onChange({
+        target: ref.current,
+      } as React.ChangeEvent<HTMLInputElement>);
     }
-  };
+  }
+};
 
   return (
     <div className={styles.mainInput}>
