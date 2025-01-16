@@ -2,20 +2,57 @@
 @import "../../../styles/mixins";
 
 .mainInput {
-  outline: none;
-  @extend %field;
+  width: 100%;
+  position: relative;
 
-  &:hover,
-  &:focus,
-  &:focus-within {
-    @extend %field_active;
+  &__field {
+    width: 100%;
+    outline: none;
+    @extend %field;
+
+    &:hover,
+    &:focus,
+    &:focus-within {
+      @extend %field_active;
+    }
+
+    ::placeholder {
+      color: $color-grey-light;
+    }
+
+    &_invalid {
+      @extend %field_invalid;
+    }
+
+    &[type="number"] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+      position: relative;
+      padding-right: 30px;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
   }
 
-  ::placeholder {
-    color: $color-grey-light;
+  &__numberArrows {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    @include flexCol();
+    flex-direction: column;
+    z-index: 2;
   }
 
-  &_invalid {
-    @extend %field_invalid;
+  &__numberArrowBtn {
+    @include button;
+  }
+
+  &__numberArrowIcon {
+    width: 12px;;
   }
 }

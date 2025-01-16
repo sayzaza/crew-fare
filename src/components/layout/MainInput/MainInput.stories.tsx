@@ -20,8 +20,23 @@ export default {
       description: "Placeholder text for the input",
       defaultValue: "Type here",
     },
+    showNumberStepBtns: {
+      control: "boolean",
+      description: "Show increment and decrement buttons for number input",
+      defaultValue: false,
+    },
+    type: {
+      control: "text",
+      description: "Input type (e.g., text, number, etc.)",
+      defaultValue: "text",
+    },
     onChange: { action: "changed", description: "Callback for input change" },
   },
+  render: (args) => (
+    <div style={{ maxWidth: 300, boxSizing: "border-box" }}>
+      <MainInput {...args} />
+    </div>
+  ),
 } as Meta<typeof MainInput>;
 
 type Story = StoryObj<typeof MainInput>;
@@ -30,6 +45,8 @@ export const Default: Story = {
   args: {
     placeholder: "Enter text",
     isInvalid: false,
+    type: "text",
+    showNumberStepBtns: false,
   },
 };
 
@@ -37,5 +54,16 @@ export const Invalid: Story = {
   args: {
     placeholder: "Invalid Input",
     isInvalid: true,
+    type: "text",
+    showNumberStepBtns: false,
+  },
+};
+
+export const WithNumberStepButtons: Story = {
+  args: {
+    placeholder: "Enter a number",
+    isInvalid: false,
+    type: "number",
+    showNumberStepBtns: true,
   },
 };
