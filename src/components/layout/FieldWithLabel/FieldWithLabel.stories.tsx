@@ -38,7 +38,7 @@ const ToggleErrorWrapper: React.FC<{ args: any }> = ({ args }) => {
   const [error, setError] = useState(args.error);
 
   return (
-    <div>
+    <div style={{ maxWidth: 400 }}>
       <FieldWithLabel {...args} error={error} />
       <MainBtn
         onClick={() => setError(error ? "" : "This is an error message")}

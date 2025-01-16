@@ -7,22 +7,44 @@ interface Props {
   label: ReactNode;
   asDiv?: boolean;
   error?: string;
+  withoutError?: boolean;
+  className?: string;
 }
 
-const FieldWithLabel: React.FC<Props> = ({ label, children, asDiv, error }) => {
+const FieldWithLabel: React.FC<Props> = ({
+  label,
+  children,
+  asDiv,
+  error,
+  withoutError,
+  className,
+}) => {
   const Label = asDiv ? "div" : "label";
 
   return (
-    <Label className={styles.fieldWithLabel}>
+    <Label className={`${styles.fieldWithLabel} ${className || ""}`}>
       <span className={styles.fieldWithLabel__text}>{label}</span>
       {children}
-      <span
-        className={`${styles.fieldWithLabel__errorTxt} ${
-          error ? styles.fieldWithLabel__errorTxt_show : ""
-        }`}
-      >
-        {error || "\u00A0"}
-      </span>
+      {!withoutError && (
+        <>
+          <span
+            className={`${styles.fieldWithLabel__errorTxt} ${
+              error ? styles.fieldWithLabel__errorTxt_show : ""
+            }`}
+          >
+            {"\u00A0"}
+          </span>
+          <div className={styles.fieldWithLabel__errorTxtWrapper}>
+            <span
+              className={`${styles.fieldWithLabel__errorTxt} ${
+                error ? styles.fieldWithLabel__errorTxt_show : ""
+              }`}
+            >
+              {error || "\u00A0"}
+            </span>
+          </div>
+        </>
+      )}
     </Label>
   );
 };
