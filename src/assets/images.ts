@@ -1,5 +1,5 @@
-import checkboxImage from "./images/checkbox.png"
+import arrowDownImage from "./images/arrowDown.svg";
+import arrowTopImage from "./images/arrowTop.svg";
+import tooltipFootImage from "./images/tooltipFoot.png";
 
-export {
-    checkboxImage
-}
+export { arrowDownImage, arrowTopImage,tooltipFootImage };
