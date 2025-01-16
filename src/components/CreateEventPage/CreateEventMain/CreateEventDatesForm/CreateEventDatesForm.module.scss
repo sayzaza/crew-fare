@@ -1,2 +1,122 @@
 @import "../../../../styles/mixins";
 @import "../../../../styles/vars";
+
+.createEventDatesForm {
+  margin-bottom: 24px;
+
+  &__fieldsWrapper {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__info {
+    position: relative;
+  }
+
+  &__infoIcon {
+    @include svg(14px);
+  }
+
+  &__tooltip {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    @include flexCol();
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: $transition;
+  }
+  
+  &__info:hover &__tooltip {
+    transform: translate(-50%, -100%);
+    pointer-events:all;
+    opacity: 1;
+  }
+
+  &__tooltipTxt {
+    border-radius: 8px;
+    background: $color-text;
+    padding: 9px 8px;
+    @include setFont(12px, 600, #141416);
+    line-height: 18px;
+    width: 242px;
+  }
+
+  &__tooltipFootImg {
+    width: 12px;
+  }
+
+  &__startEndDatesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__startEndDatesList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__startEndDateCol {
+    @include flexCol();
+    gap: 20px;
+  }
+
+  &__deleteBtnWrapper {
+    align-items: stretch;
+    width: auto;
+  }
+
+  &__deleteBtn {
+    @include button();
+    width: 24px;
+    height: 24px;
+    @include flexCol();
+    margin: auto;
+
+    &:disabled {
+      cursor: default;
+      svg {
+        fill: $color-grey-light;
+      }
+    }
+  }
+
+  &__deleteIcon {
+    transition: $transition;
+    @include svg(14px, $color-coral-text);
+  }
+
+  &__addBtn {
+    @include button();
+    @include flexCol(flex-start);
+    gap: 8px;
+    @include setFont(14px, 600, $color-green);
+  }
+
+  &__addBtnPlusIcon {
+    @include svg(12px);
+  }
+
+  &__taxesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__taxesList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__taxCol {
+    @include flexCol(center, stretch);
+    gap: 20px;
+  }
+}

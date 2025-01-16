@@ -1,2 +1,15 @@
 @import "../../../../styles/mixins";
 @import "../../../../styles/vars";
+
+.createEventDetailsForm {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}

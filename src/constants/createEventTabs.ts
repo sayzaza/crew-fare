@@ -16,6 +16,7 @@ export interface CreateEventTabProps {
   formData: IEvent;
   onChange: UseFormvalueReturnType["onChange"];
   onChangeSelect: UseFormvalueReturnType["onChangeSelect"];
+  clearInputError: UseFormvalueReturnType["clearInputError"];
   error: UseFormvalueReturnType["error"];
 }
 
@@ -43,7 +44,7 @@ export const CREATE_EVENT_TABS: {
   [ECreateEventTabKeys.DETAILS]: {
     title: "Details",
     component: CreateEventDetailsForm,
-    fields: ["link", "address", "venue", "featuredHotelsTitle", "minLength"],
+    fields: ["link", "address", "venue", "featuredHotelsTitle", "minNights"],
   },
   [ECreateEventTabKeys.DATES]: {
     title: "Dates",

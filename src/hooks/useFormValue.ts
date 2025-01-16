@@ -27,12 +27,16 @@ export const useFormValue = <T extends FormDataType>(initialData: T) => {
     onChange(e);
   };
 
-  const onChangeSelect = <Value>(key: keyof T, value: Value) => {
+  const onChangeSelect = <Value>(
+    key: keyof T,
+    value: Value,
+    clearError: boolean = true
+  ) => {
     setFormData((state) => ({
       ...state,
       [key]: value,
     }));
-    clearInputError(key);
+    if (clearError) clearInputError(key);
   };
 
   const clearInputError = (inputName: keyof T) => {
@@ -60,6 +64,6 @@ export const useFormValue = <T extends FormDataType>(initialData: T) => {
     clearInputError,
     getError,
     setError,
-    error
+    error,
   };
 };

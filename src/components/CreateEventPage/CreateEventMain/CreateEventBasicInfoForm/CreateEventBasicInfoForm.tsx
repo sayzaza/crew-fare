@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
-import styles from "./CreateEventBasicInfoForm.module.scss";
 import CreateEventFieldsWrapper from "../CreateEventFieldsWrapper/CreateEventFieldsWrapper";
 import FieldWithLabel from "../../../layout/FieldWithLabel/FieldWithLabel";
 import Select from "../../../layout/Select/Select";
-import { ISelectOption } from "../../../../models/UI/ISelectOption";
 import MainInput from "../../../layout/MainInput/MainInput";
 import Svg from "../../../layout/Svg/Svg";
-import { uploadIcon } from "../../../../assets/svg";
 import Checkbox from "../../../layout/Checkbox/Checkbox";
-import { IEvent } from "../../../../models/IEvent";
-import { useFormValue } from "../../../../hooks/useFormValue";
-import { CreateEventTabProps } from "../../../../constants/createEventTabs";
-import { error } from "console";
 
-type UseFormvalueReturnType = ReturnType<typeof useFormValue<IEvent>>;
+import { ISelectOption } from "../../../../models/UI/ISelectOption";
+import { CreateEventTabProps } from "../../../../constants/createEventTabs";
+import { uploadIcon } from "../../../../assets/svg";
+import styles from "./CreateEventBasicInfoForm.module.scss";
+
 
 const eventTypeOptions: ISelectOption[] = [
   {
@@ -37,10 +34,37 @@ const CreateEventBasicInfoForm: React.FC<CreateEventTabProps> = ({
   onChangeSelect,
   error,
 }) => {
+  const [isDragging, setIsDragging] = useState(false);
+
+  const setBannerImg = (files: FileList) => {
+    if (files[0].type === "image/png" || files[0].type === "image/jpeg") {
+      onChangeSelect("banner", URL.createObjectURL(files[0]));
+    }
+  };
   const onUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      onChangeSelect("banner", URL.createObjectURL(e.target.files[0]));
+      setBannerImg(e.target.files);
     }
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(false);
+
+    setBannerImg(event.dataTransfer.files);
   };
 
   return (
@@ -89,14 +113,23 @@ const CreateEventBasicInfoForm: React.FC<CreateEventTabProps> = ({
         </FieldWithLabel>
       </div>
       <FieldWithLabel label={"Banner"} asDiv error={error.banner}>
-        <label className={styles.createEventBasicInfoForm__uploadArea}>
+        <label
+          className={styles.createEventBasicInfoForm__uploadArea}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <div
             style={{
               backgroundImage: formData.banner
                 ? `url(${formData.banner})`
                 : "unset",
             }}
-            className={styles.createEventBasicInfoForm__uploadAreaInner}
+            className={`${styles.createEventBasicInfoForm__uploadAreaInner} ${
+              isDragging
+                ? styles.createEventBasicInfoForm__uploadAreaInner_dragging
+                : ""
+            }`}
           >
             {!formData.banner ? (
               <>
