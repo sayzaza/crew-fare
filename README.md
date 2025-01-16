@@ -1,31 +1,133 @@
-# Getting Started with Create React App
+# React Event Management Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React-based event management application built using TypeScript, SCSS, and CSS Modules. It features a user-friendly interface for creating and managing events, with functionalities like uploading banners, setting event details, and more. The application is well-tested with Jest and includes component documentation using Storybook.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Running the Project](#running-the-project)
+- [Testing the Project](#testing-the-project)
+- [Using Storybook](#using-storybook)
+- [Application Features](#application-features)
+- [Screenshots](#screenshots)
+- [Tech Stack](#tech-stack)
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Running the Project
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. **Clone the Repository**
 
-### `npm test`
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
 
-Launches the test runner in interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Install Dependencies**
+   Make sure you have Node.js and npm installed. Then run:
 
-### `npm run build`
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Run the Application**
+   Start the development server:
+   ```bash
+   npm start
+   ```
+   The application will be available at `http://localhost:3000/`.
 
-The build is minified, and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Testing the Project
 
+The application uses Jest for unit and integration tests.
+
+1. **Run Tests**
+
+   ```bash
+   npm test
+   ```
+
+2. **View Test Coverage**
+   To generate a test coverage report, run:
+   ```bash
+   npm test -- --coverage
+   ```
+   The coverage report will be available in the `coverage/` directory.
+
+---
+
+## Using Storybook
+
+Storybook is used to document and visually test components.
+
+1. **Start Storybook**
+
+   ```bash
+   npm run storybook
+   ```
+
+   Storybook will be available at `http://localhost:6006/`.
+
+2. **Build Storybook**
+   To generate a static Storybook build:
+   ```bash
+   npm run build-storybook
+   ```
+   The static files will be available in the `storybook-static/` directory.
+
+---
+
+## Application Features
+
+- **Event Creation**: Users can create public or private events.
+- **Banner Upload**: Upload and preview event banners.
+- **Event Details**: Add event address, venue name, and featured hotels.
+- **Date Selection**: A user-friendly calendar interface to easily select dates for key actions, making scheduling and date management seamless.
+
+---
+
+## Screenshots
+
+### Basic Information Page
+
+![Basic Information Page](./public/images/basicInfoTab.png)
+
+### Details Page
+
+![Details Page](./public/images/detailsTab.png)
+
+### Dates Page
+
+![Dates Page](./public/images/datesTab.png)
+
+---
+
+## Tech Stack
+
+- **Frontend**: React, TypeScript
+- **Styling**: SCSS, CSS Modules
+- **Testing**: Jest
+- **Component Documentation**: Storybook
+- **Packages Used**:
+  - `uuid` for generating unique identifiers.
+  - `react-calendar` for date selection functionality.
+
+---
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'Add new feature'
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
