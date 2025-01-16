@@ -1,12 +1,13 @@
 import React from "react";
 
-import styles from "./CreateEventSideBar.module.scss";
+import Svg from "../../layout/Svg/Svg";
+
 import {
   CREATE_EVENT_TABS_ARRAY,
   ECreateEventTabKeys,
 } from "../../../constants/createEventTabs";
-import Svg from "../../layout/Svg/Svg";
 import { alertIcon, checkboxIcon } from "../../../assets/svg";
+import styles from "./CreateEventSideBar.module.scss";
 
 interface Props {
   activeTab: ECreateEventTabKeys;

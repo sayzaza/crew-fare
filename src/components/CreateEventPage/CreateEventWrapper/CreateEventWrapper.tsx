@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
-import styles from "./CreateEventWrapper.module.scss";
 import CreateEventSideBar from "../CreateEventSideBar/CreateEventSideBar";
 import CreateEventMain from "../CreateEventMain/CreateEventMain";
+
 import {
   CREATE_EVENT_TABS_ARRAY,
   ECreateEventTabKeys,
 } from "../../../constants/createEventTabs";
+import styles from "./CreateEventWrapper.module.scss";
 
 const CreateEventWrapper = () => {
   const [activeTab, setActiveTab] = useState(ECreateEventTabKeys.BASIC);

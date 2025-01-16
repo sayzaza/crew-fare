@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import styles from "./Select.module.scss";
-import { ISelectOption } from "../../../models/UI/ISelectOption";
 import Svg from "../Svg/Svg";
-import { arrowDownIcon } from "../../../assets/svg";
 import TransitionProvider, {
   TransitionStyleTypes,
 } from "../../../providers/TransitionProvider";
+
+import { ISelectOption } from "../../../models/UI/ISelectOption";
+import { arrowDownIcon } from "../../../assets/svg";
+import styles from "./Select.module.scss";
 
 interface Props {
   values: ISelectOption[];
