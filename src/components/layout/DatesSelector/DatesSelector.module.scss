@@ -1,0 +1,90 @@
+@import "../../../styles/mixins";
+@import "../../../styles/vars";
+
+.datesSelector {
+  @extend %field;
+  width: 100%;
+  position: relative;
+
+  &__calendarBtn {
+    @include button();
+  }
+  &__calendarIcon {
+    @include svg(24px);
+  }
+
+  &__calendarModal {
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+    transform: translateY(100%);
+    background-color: $color-grey;
+    border-radius: 10px;
+    padding: 8px;
+    @include flexCol(center, stretch);
+    gap: 10px;
+    box-shadow: 1px 1px 8px 0px $color-bg;
+    z-index: 3;
+    max-width: 600px;
+  }
+
+  &__calendarWrapper {
+    width: 100%;
+    @include flexCol();
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__calendarTitle {
+    @include setFont(18px, 500);
+  }
+
+  &__calendar {
+    width: 100%;
+    background: #2f2f31;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    height: 100%;
+  }
+
+  &__calendarTile {
+    color: $color-text;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #4423ffa8 !important;
+    }
+  }
+
+  &__calendarArrowBtn {
+    @include button($color-bg);
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    @include flexCol();
+    border: 1px solid transparent;
+    transition: $transition;
+    align-self: center;
+
+    &:hover {
+      border-color: $color-green;
+    }
+  }
+
+  &__calendarArrowIcon {
+    @include svg(12px);
+  }
+}
+
+:global(.react-calendar__tile--active) {
+  background: $color-primary !important;
+}
+
+:global(.react-calendar__month-view__days__day--weekend) {
+  color: $color-coral-text;
+}
+
+:global(.react-calendar__tile--now) {
+  background-color: #4ff6b096;
+}
