@@ -56,7 +56,7 @@ const CreateEventDetailsForm: React.FC<CreateEventTabProps> = ({
           <MainInput
             showNumberStepBtns
             type="number"
-            onChange={(e) => onChangeSelect("minNights", e.target.value,false)}
+            onChange={onChange}
             name="minNights"
             value={formData.minNights}
             isInvalid={!!error.minNights}
