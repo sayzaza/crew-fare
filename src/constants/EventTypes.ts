@@ -1,5 +1,5 @@
 export enum EventTypes {
-    PUBLIC = "public",
-    PRIVATE = "private",
-    OTHER = "other",
+	PUBLIC = "public",
+	PRIVATE = "private",
+	OTHER = "other",
 }
