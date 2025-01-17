@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { formatDate } from "../../../utils/functions/formatDate";
 import Calendar from "react-calendar";
 
 import Svg from "../Svg/Svg";
@@ -38,6 +37,13 @@ const monthNames = [
   "November",
   "December",
 ];
+
+export function formatDate(date: Date) {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
+}
 
 const getDateYearAndMonth = (date: Date) => {
   const year = date.getFullYear();
