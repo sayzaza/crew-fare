@@ -183,10 +183,9 @@ const CreateEventDatesForm: React.FC<CreateEventTabProps> = ({
                       [formData.bookableStartDate, formData.bookableEndDate]
                     ));
                 return (
-                  <FieldWithLabel label="" asDiv error={errorText}>
+                  <FieldWithLabel label="" asDiv error={errorText} key={id}>
                     <div
                       className={styles.createEventDatesForm__startEndDateCol}
-                      key={id}
                     >
                       <DatesSelector
                         isInvalid={!!errorText}
